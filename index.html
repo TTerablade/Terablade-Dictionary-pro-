@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Custom Browser</title>
+    <title>Recipe Finder Browser</title>
     <style>
-        /* ... (existing styles) ... */
-
-        #dictionary-container {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 10px;
-            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        #dictionary-results {
-            list-style: none;
-            padding: 0;
-        }
+        /* ... (your existing styles) ... */
     </style>
 </head>
 <body>
-    <div id="dictionary-container">
-        <h2>Dictionary</h2>
-        <input type="text" id="dictionary-search" placeholder="Search for a word">
-        <button onclick="searchDictionary()">Search</button>
-        <ul id="dictionary-results"></ul>
+    <div id="header">
+        <input type="text" id="search-bar" placeholder="Search for a recipe">
+        <button onclick="searchRecipes()">Search</button>
+    </div>
+    <div id="tabs">
+        </div>
+    <div id="content-area">
+        <div id="recipe-results"></div>
     </div>
 
     <script>
-        var dictionary = {
-            "apple": "A round, sweet, edible fruit with red, green, or yellow skin.",
-            "banana": "A long, curved fruit with yellow skin and sweet, creamy flesh.",
-            // Add more key-value pairs to your dictionary
-        };
+        var recipes = [
+            // Your recipe data here
+        ];
 
-        function searchDictionary() {
-            var word = document.getElementById("dictionary-search").value;
-            var definition = dictionary[word];
+        function searchRecipes() {
+            var keyword = document.getElementById("search-bar").value;
+            var filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(keyword.toLowerCase()) || recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(keyword.toLowerCase())));
+            displayRecipes(filteredRecipes);
+        }
 
-            if (definition) {
-                var resultsList = document.getElementById("dictionary-results");
-                resultsList.innerHTML = "<li>" + word + ": " + definition + "</li>";
-                document.getElementById("dictionary-container").style.display = "block";
+        function displayRecipes(recipes) {
+            var resultsContainer = document.getElementById("recipe-results");
+            resultsContainer.innerHTML = "";
+
+            if (recipes.length === 0) {
+                resultsContainer.innerHTML = "<p>No recipes found.</p>";
             } else {
-                alert("Word not found in the dictionary.");
+                recipes.forEach(recipe => {
+                    var recipeCard = document.createElement("div");
+                    recipeCard.className = "recipe-card";
+                    recipeCard.innerHTML = `
+                        <h3>${recipe.title}</h3>
+                        <p>${recipe.description}</p>
+                        <ul>
+                            ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join("")}
+                        </ul>
+                    `;
+                    resultsContainer.appendChild(recipeCard);
+                });
             }
         }
     </script>
