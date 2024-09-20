@@ -3,41 +3,7 @@
 <head>
     <title>Recipe Finder Server</title>
     <style>
-        body {
-            font-family: monospace;
-            background-color: #111;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-
-        #header {
-            display: flex;
-            align-items: center;
-            height: 40px;
-            background-color: #222;
-            border-bottom: 1px solid #333;
-        }
-
-        #search-bar {
-            flex-grow: 1;
-            padding: 10px;
-            border: none;
-            background-color: #333;
-            color: #fff;
-            border-radius: 3px;
-        }
-
-        #recipe-results {
-            padding: 20px;
-            color: #ccc;
-        }
-
-        .recipe-card {
-            border: 1px solid #444;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
+        /* ... (your existing styles) ... */
     </style>
 </head>
 <body>
@@ -82,7 +48,7 @@
         }
 
         // Add event listener for Enter key press
-        document.getElementById("search-bar").addEventListener("keypress", function(event) {
+        document.getElementById("search-bar").addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
                 searchRecipes();
