@@ -3,7 +3,78 @@
 <head>
     <title>Editable Status Dictionary</title>
     <style>
-        /* ... CSS styles ... */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        #search-bar {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 400px;
+        }
+
+        #search-button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #dictionary-results {
+            padding: 20px;
+        }
+
+        .definition-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .definition-card h3 {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .definition-card p {
+            margin: 0;
+        }
+
+        .edit-button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .edit-mode {
+            border: 2px solid blue;
+        }
+
+        .edit-input {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -15,77 +86,5 @@
     </div>
     <div id="dictionary-results"></div>
 
-    <script>
-        var statuses = {};
-
-        function loadDefinitions() {
-            var storedDefinitions = localStorage;
-            for (var key in storedDefinitions) {
-                if (storedDefinitions.hasOwnProperty(key)) {
-                    statuses[key] = storedDefinitions[key];
-                }
-            }
-        }
-
-        function saveDefinition(definitionCard) {
-            var keyword = definitionCard.querySelector("h3").textContent;
-            var newDefinition = definitionCard.querySelector("p").textContent;
-
-            if (keyword && newDefinition) {
-                localStorage.setItem(keyword.toLowerCase(), newDefinition);
-            } else {
-                alert("Please enter both a keyword and definition.");
-            }
-        }
-
-        function searchStatus() {
-            var keyword = document.getElementById("search-bar").value;
-            var definition = statuses[keyword.toLowerCase()];
-
-            if (definition) {
-                displayDefinition(keyword, definition);
-            } else {
-                alert("Status not found.");
-            }
-        }
-
-        function displayDefinition(keyword, definition) {
-            // ... (rest of the displayDefinition function)
-
-            // Add event listener to edit button
-            definitionCard.querySelector(".edit-button").addEventListener("click", function() {
-                toggleEditMode(definitionCard);
-            });
-        }
-
-        function toggleEditMode(definitionCard) {
-            // ... (rest of the toggleEditMode function)
-
-            // Add event listener to save button
-            if (definitionCard.classList.contains("edit-mode")) {
-                definitionCard.querySelector(".edit-button").addEventListener("click", function() {
-                    saveDefinition(definitionCard);
-                });
-            }
-        }
-
-        function sortResults(results) {
-            // Sort results alphabetically
-            results.sort(function(a, b) {
-                return a.keyword.localeCompare(b.keyword);
-            });
-        }
-
-        // Load stored definitions on page load
-        loadDefinitions();
-
-        // Add event listener for Enter key press
-        document.getElementById("search-bar").addEventListener("keydown", function(event) {
-            if (event.keyCode === 13) {
-                event.preventDefault();
-                searchStatus();
-            }
-        });
-    </script>
-</body>
+    </body>
 </html>
