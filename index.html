@@ -4,25 +4,31 @@
     <title>My Simple Browser</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         #address-bar {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
+            border-radius: 3px;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
         }
 
         #content-area {
-            height: 80vh;
+            height: calc(100vh - 40px); /* Adjust height based on address bar */
             overflow: auto;
-            border: 1px solid #ccc;
+            border: none;
         }
     </style>
 </head>
 <body>
-    <input type="text" id="address-bar" placeholder="Enter URL">
-    <button onclick="loadPage()">Go</button>
+    <div style="display: flex; align-items: center; padding: 10px;">
+        <input type="text" id="address-bar" placeholder="Enter URL" style="flex-grow: 1;">
+        <button style="padding: 10px; border: none; background-color: #f5f5f5; border-radius: 3px; cursor: pointer;">Go</button>
+    </div>
     <div id="content-area"></div>
 
     <script>
