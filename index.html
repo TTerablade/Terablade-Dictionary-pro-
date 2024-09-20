@@ -1,21 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recipe Finder Browser</title>
+    <title>Recipe Finder Server</title>
     <style>
-        /* ... (your existing styles) ... */
+        body {
+            font-family: monospace;
+            background-color: #111;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header {
+            display: flex;
+            align-items: center;
+            height: 40px;
+            background-color: #222;
+            border-bottom: 1px solid #333;
+        }
+
+        #search-bar {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            border-radius: 3px;
+        }
+
+        #recipe-results {
+            padding: 20px;
+            color: #ccc;
+        }
+
+        .recipe-card {
+            border: 1px solid #444;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div id="header">
+        <span style="color: #ccc">Recipe Finder Server</span>
         <input type="text" id="search-bar" placeholder="Search for a recipe">
-        <button onclick="searchRecipes()">Search</button>
+        <button style="color: #ccc; background-color: #444; border: none; padding: 10px; border-radius: 3px;">Search</button>
     </div>
-    <div id="tabs">
-        </div>
-    <div id="content-area">
-        <div id="recipe-results"></div>
-    </div>
+    <div id="recipe-results"></div>
 
     <script>
         var recipes = [
@@ -49,6 +80,14 @@
                 });
             }
         }
+
+        // Add event listener for Enter key press
+        document.getElementById("search-bar").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                searchRecipes();
+            }
+        });
     </script>
 </body>
 </html>
