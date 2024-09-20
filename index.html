@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Simple Browser</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #address-bar {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        #content-area {
+            height: 80vh;
+            overflow: auto;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="address-bar" placeholder="Enter URL">
+    <button onclick="loadPage()">Go</button>
+    <div id="content-area"></div>
+
+    <script>
+        function loadPage() {
+            var url = document.getElementById("address-bar").value;
+            // Here, you would use JavaScript to fetch the content from the URL and display it in the content-area div
+        }
+    </script>
+</body>
+</html>
