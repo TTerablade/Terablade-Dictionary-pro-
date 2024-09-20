@@ -1,57 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recipe Finder Server</title>
+    <title>Editable Status Dictionary</title>
     <style>
         /* ... (your existing styles) ... */
+
+        .definition-card {
+            position: relative;
+        }
+
+        .edit-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+
+        .edit-mode {
+            border: 2px solid blue;
+        }
+
+        .edit-input {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            outline: none;
+        }
     </style>
 </head>
 <body>
     <div id="header">
-        <span style="color: #ccc">Recipe Finder Server</span>
-        <input type="text" id="search-bar" placeholder="Search for a recipe">
+        <span style="color: #ccc">Editable Status Dictionary</span>
+        <input type="text" id="search-bar" placeholder="Search for a status">
         <button style="color: #ccc; background-color: #444; border: none; padding: 10px; border-radius: 3px;">Search</button>
     </div>
-    <div id="recipe-results"></div>
+    <div id="dictionary-results"></div>
 
     <script>
-        var recipes = [
-            // Your recipe data here
-        ];
+        var statuses = {
+            "pending": "Awaiting approval or completion.",
+            "approved": "Accepted or authorized.",
+            "rejected": "Denied or refused.",
+            "completed": "Finished or concluded.",
+            // Add more status definitions here
+        };
 
-        function searchRecipes() {
+        function searchStatus() {
             var keyword = document.getElementById("search-bar").value;
-            var filteredRecipes = recipes.filter(recipe => recipe.title.toLowerCase().includes(keyword.toLowerCase()) || recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(keyword.toLowerCase())));
-            displayRecipes(filteredRecipes);
+            var definition = statuses[keyword.toLowerCase()];
+
+            if (definition) {
+                displayDefinition(keyword, definition);
+            } else {
+                alert("Status not found.");
+            }
         }
 
-        function displayRecipes(recipes) {
-            var resultsContainer = document.getElementById("recipe-results");
+        function displayDefinition(keyword, definition) {
+            var resultsContainer = document.getElementById("dictionary-results");
             resultsContainer.innerHTML = "";
 
-            if (recipes.length === 0) {
-                resultsContainer.innerHTML = "<p>No recipes found.</p>";
+            var definitionCard = document.createElement("div");
+            definitionCard.className = "definition-card";
+            definitionCard.innerHTML = `
+                <h3>${keyword}</h3>
+                <p>${definition}</p>
+                <button class="edit-button">Edit</button>
+            `;
+            resultsContainer.appendChild(definitionCard);
+
+            // Add event listener to edit button
+            definitionCard.querySelector(".edit-button").addEventListener("click", function() {
+                toggleEditMode(definitionCard);
+            });
+        }
+
+        function toggleEditMode(definitionCard) {
+            var definitionText = definitionCard.querySelector("p");
+            var editButton = definitionCard.querySelector(".edit-button");
+
+            if (definitionCard.classList.contains("edit-mode")) {
+                // Exit edit mode
+                definitionCard.classList.remove("edit-mode");
+                editButton.textContent = "Edit";
+                definitionText.contentEditable = false;
+                saveDefinition(definitionCard);
             } else {
-                recipes.forEach(recipe => {
-                    var recipeCard = document.createElement("div");
-                    recipeCard.className = "recipe-card";
-                    recipeCard.innerHTML = `
-                        <h3>${recipe.title}</h3>
-                        <p>${recipe.description}</p>
-                        <ul>
-                            ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join("")}
-                        </ul>
-                    `;
-                    resultsContainer.appendChild(recipeCard);
-                });
+                // Enter edit mode
+                definitionCard.classList.add("edit-mode");
+                editButton.textContent = "Save";
+                definitionText.contentEditable = true;
+                definitionText.focus();
             }
+        }
+
+        function saveDefinition(definitionCard) {
+            var keyword = definitionCard.querySelector("h3").textContent;
+            var newDefinition = definitionCard.querySelector("p").textContent;
+            statuses[keyword.toLowerCase()] = newDefinition;
         }
 
         // Add event listener for Enter key press
         document.getElementById("search-bar").addEventListener("keydown", function(event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
-                searchRecipes();
+                searchStatus();
             }
         });
     </script>
